@@ -9,7 +9,7 @@ document.write(`
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
-
+    <base href="https://washingtoneaura.github.io/washingtone/">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
