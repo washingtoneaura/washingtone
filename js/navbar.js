@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <a href="detail.html" class="dropdown-item">Blog Detail</a>
                             </div>
                         </div>
-                        <div class="nav-item dropdown">
+                        <div class="nav-item dropdown dp2">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0">
                                 <a href="price.html" class="dropdown-item">Pricing Plan</a>
@@ -51,43 +51,90 @@ document.addEventListener('DOMContentLoaded', function() {
         // Inject the HTML
         navbarContainer.innerHTML = navbarHTML;
 
-         // Get all navigation links
-         var navLinks = document.querySelectorAll('.nav-item.nav-link');
+        // Get all navigation links
+        var navLinks = document.querySelectorAll('.nav-item.nav-link, .dropdown-item');
 
-         // Function to add/remove the active class
-         const setActiveLink = (link) => {
-             navLinks.forEach(link => {
-                 link.classList.remove('active'); // Remove active class from all links
-             });
-             link.classList.add('active'); // Add active class to the current link
-             console.log(`Set ${link.href} as active`); // Log the action
-         };
- 
-         // Determine the current page and set the active link
-         //BELOW 1st line works locally
-         //var currentPage = window.location.pathname.split('/').pop().replace('.html', '');// Adjusted to remove .html extension - local testing
-         //var currentPage = window.location.pathname.split('/').slice(-2).join('/').replace('.html', ''); // Adjusted to handle full URL structure - github hosted
+        // Function to add/remove the active class
+        const setActiveLink = (link) => {
+            navLinks.forEach(link => {
+                link.classList.remove('active'); // Remove active class from all links
+            });
+            link.classList.add('active'); // Add active class to the current link
+            console.log(`Set ${link.href} as active`); // Log the action
+        };
 
-         var currentPage = '';
-         var isDomainHosted = window.location.protocol.includes('http');
-         //var isDomainHosted = window.location.hostname !== ''; // Check if hostname exists - ALSO WORKS
-         if (isDomainHosted) {
-             // For domain-hosted pages, extract the last segment after the domain
-             var pathSegments = window.location.pathname.split('/');
-             currentPage = pathSegments[pathSegments.length - 1].replace('.html', ''); // Correctly assign the last segment
-         } else {
-             // For local pages, simply use the filename
-             currentPage = window.location.pathname.split('/').pop().replace('.html', '');
-         }
-         //currentPage += '.html'; // Append '.html' to match the href attributes     
+        // Determine the current page and set the active link
+        //BELOW works locally
+        //var currentPage = window.location.pathname.split('/').pop().replace('.html', '');// Adjusted to remove .html extension - local testing
 
-         var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}.html"]`);
-         //var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}"]`);
-         if (currentLink) {
+        var currentPage = '';
+        var isDomainHosted = window.location.protocol.includes('http');
+        //var isDomainHosted = window.location.hostname !== ''; // Check if hostname exists - ALSO WORKS
+        if (isDomainHosted) {
+            // For domain-hosted pages, extract the last segment after the domain
+            var pathSegments = window.location.pathname.split('/');
+            currentPage = pathSegments[pathSegments.length - 1].replace('.html', ''); // Correctly assign the last segment
+        } else {
+            // For local pages, simply use the filename
+            currentPage = window.location.pathname.split('/').pop().replace('.html', '');
+        }
+
+        var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}.html"], .nav-link.dropdown-toggle[href="${currentPage}.html"]`);
+        if (currentLink) {
             console.log(`Current page is ${currentPage}, setting ${currentLink.href} as active`); // Log the current page and the action
-             setActiveLink(currentLink);
+            setActiveLink(currentLink);
         } else {
             console.log(`No matching link found for ${currentPage}`); // Log if no matching link is found
-        }    
+        }  
+
+        // Initially set the dropdown toggle as active if the current page matches
+        var blogDropdownToggle = document.querySelector('.nav-item.dropdown .nav-link.dropdown-toggle');
+        if (blogDropdownToggle && (currentPage === 'blog' || currentPage === 'detail')) {
+            setActiveLink(blogDropdownToggle);
+        }
+
+        var pagesDropdownToggle = document.querySelector('.nav-item.dropdown.dp2 .nav-link.dropdown-toggle');
+        if (pagesDropdownToggle && (currentPage === 'price' || currentPage === 'feature' || currentPage === 'team' || currentPage === 'testimonial' || currentPage === 'quote')) {
+            setActiveLink(pagesDropdownToggle);
+        }
+
+
+        var dropdownItems = document.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(function(item) {
+            item.addEventListener('click', function(event) {
+                event.stopPropagation();
+                var dropdownToggle = item.closest('.nav-item.dropdown').querySelector('.nav-link.dropdown-toggle');
+                if (dropdownToggle) {
+                    setActiveLink(dropdownToggle);
+                }
+            });
+        });
+
+
+         /*
+        // Handle dropdown item clicks
+        var dropdownItems = document.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(function(item) {
+            item.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent default action to avoid page reload
+                var dropdownToggle = item.closest('.nav-item.dropdown').querySelector('.nav-link.dropdown-toggle');
+                if (dropdownToggle) {
+                    // Ensure only the correct dropdown toggle is set as active
+                    if (dropdownToggle.textContent.trim() === 'Pages' && ['price', 'feature', 'team', 'testimonial', 'quote'].includes(currentPage)) {
+                        setActiveLink(dropdownToggle);
+                    } else if (dropdownToggle.textContent.trim() === 'Blog' && ['blog', 'detail'].includes(currentPage)) {
+                        setActiveLink(dropdownToggle);
+                    }
+                }
+            });
+        });
+
+       
+        // Set initial active state based on current page
+        var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}.html"], .nav-link.dropdown-toggle[href="${currentPage}.html"]`);
+        if (currentLink) {
+            setActiveLink(currentLink);
+        }*/
+        
     }
 });
