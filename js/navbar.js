@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
             setActiveLink(pagesDropdownToggle);
         }
 
-
         var dropdownItems = document.querySelectorAll('.dropdown-item');
         dropdownItems.forEach(function(item) {
             item.addEventListener('click', function(event) {
@@ -110,31 +109,5 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-
-         /*
-        // Handle dropdown item clicks
-        var dropdownItems = document.querySelectorAll('.dropdown-item');
-        dropdownItems.forEach(function(item) {
-            item.addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevent default action to avoid page reload
-                var dropdownToggle = item.closest('.nav-item.dropdown').querySelector('.nav-link.dropdown-toggle');
-                if (dropdownToggle) {
-                    // Ensure only the correct dropdown toggle is set as active
-                    if (dropdownToggle.textContent.trim() === 'Pages' && ['price', 'feature', 'team', 'testimonial', 'quote'].includes(currentPage)) {
-                        setActiveLink(dropdownToggle);
-                    } else if (dropdownToggle.textContent.trim() === 'Blog' && ['blog', 'detail'].includes(currentPage)) {
-                        setActiveLink(dropdownToggle);
-                    }
-                }
-            });
-        });
-
-       
-        // Set initial active state based on current page
-        var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}.html"], .nav-link.dropdown-toggle[href="${currentPage}.html"]`);
-        if (currentLink) {
-            setActiveLink(currentLink);
-        }*/
-        
     }
 });
