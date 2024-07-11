@@ -74,15 +74,15 @@ document.addEventListener('DOMContentLoaded', function() {
          if (isDomainHosted) {
              // For domain-hosted pages, extract the last segment after the domain
              var pathSegments = window.location.pathname.split('/');
-             currentPage = pathSegments[pathSegments.length - 2]; // Exclude the last segment ('.html')
+             currentPage = pathSegments[pathSegments.length - 1].replace('.html', ''); // Correctly assign the last segment
          } else {
              // For local pages, simply use the filename
-             currentPage = window.location.pathname.split('/').pop();
+             currentPage = window.location.pathname.split('/').pop().replace('.html', '');
          }
          //currentPage += '.html'; // Append '.html' to match the href attributes     
 
-         //var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}.html"]`);
-         var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}"]`);
+         var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}.html"]`);
+         //var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}"]`);
          if (currentLink) {
             console.log(`Current page is ${currentPage}, setting ${currentLink.href} as active`); // Log the current page and the action
              setActiveLink(currentLink);
