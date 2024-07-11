@@ -64,11 +64,13 @@ document.addEventListener('DOMContentLoaded', function() {
          };
  
          // Determine the current page and set the active link
+         //BELOW 1st line works locally
          //var currentPage = window.location.pathname.split('/').pop().replace('.html', '');// Adjusted to remove .html extension - local testing
-         var currentPage = window.location.pathname.split('/').slice(-2).join('/').replace('.html', ''); // Adjusted to handle full URL structure - github hosted
+         //var currentPage = window.location.pathname.split('/').slice(-2).join('/').replace('.html', ''); // Adjusted to handle full URL structure - github hosted
 
-         /*var currentPage = '';
+         var currentPage = '';
          var isDomainHosted = window.location.protocol.includes('http');
+         //var isDomainHosted = window.location.hostname !== ''; // Check if hostname exists - ALSO WORKS
          if (isDomainHosted) {
              // For domain-hosted pages, extract the last segment after the domain
              var pathSegments = window.location.pathname.split('/');
@@ -77,12 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
              // For local pages, simply use the filename
              currentPage = window.location.pathname.split('/').pop();
          }
-         currentPage += '.html'; // Append '.html' to match the href attributes
-         */
- 
+         //currentPage += '.html'; // Append '.html' to match the href attributes     
 
-
-         var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}.html"]`);
+         //var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}.html"]`);
+         var currentLink = document.querySelector(`.nav-item.nav-link[href="${currentPage}"]`);
          if (currentLink) {
             console.log(`Current page is ${currentPage}, setting ${currentLink.href} as active`); // Log the current page and the action
              setActiveLink(currentLink);
